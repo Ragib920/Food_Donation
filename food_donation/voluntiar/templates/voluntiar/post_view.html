@@ -1,0 +1,47 @@
+{% extends "voluntiar/base.html" %}
+{% block content %}
+
+    <article class="media content-section">
+        <img class="rounded-circle article-img" src="{{ object.username.profile.image.url }}">
+        <div class="media-body">
+            <div class="article-metadata">
+                <a class="mr-2" href="#">{{ object.username }}</a>
+                <small class="text-muted">{{ object.date_posted | date:"F d, Y" }}</small>
+
+            </div>
+
+            <h2 class="article-title">{{ object.title }}</h2>
+            <p class="article-content">{{ object.food_des }}</p>
+         Status:
+                {% if object.status == 1 %}
+                    <button class="btn btn-info" disabled>Pending</button>
+                    <a href="{% url 'update_status' object.id %}" class="btn btn-success" >Confirm to Take Delivery</a>
+                    <a href="{% url 'update_status2'  object.id %}" class="btn btn-danger">Delivered</a>
+                {% elif object.status == 2  %}
+                    <a href="{% url 'update_status1'  object.id %}" class="btn btn-info" >Pending</a>
+                    <button class="btn btn-success" disabled >Confirm to Take Delivery</button>
+                    <a href="{% url 'update_status2'  object.id %}" class="btn btn-danger">Delivered</a>
+                {% else %}
+                    <a href="{% url 'update_status1'  object.id %}" class="btn btn-info" >Pending</a>
+                    <a href="{% url 'update_status'  object.id %}" class="btn btn-success" >Confirm to Take Delivery</a>
+                    <button class="btn btn-danger" disabled>Delivered</button>
+                {% endif %}
+        </div>
+    </article>
+    <article  class="media content-section">
+        <div class="media-body">
+        <h4>Donor Details</h4>
+            <hr>
+               <div class="article-metadata">
+                <h3>Name of Donor: {{ object.username }}</h3>
+                   <hr>
+               <p>Date Of Post :  {{ object.date_posted | date:"F d, Y" }}</p>
+                   <p>Date of Take Product : {{ object.date }}</p>
+                   <p>Email : {{ object.username.email }}</p>
+                     <p>Phone : {{ object.username.profile.number }}</p>
+                    <address>Address : {{ object.username.profile.address }}</address>
+            </div>
+        </div>
+    </article>
+
+{% endblock content %}
